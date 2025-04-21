@@ -1,148 +1,103 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-  <meta http-equiv="Content-Style-Type" content="text/css">
-  <title></title>
-  <meta name="Generator" content="Cocoa HTML Writer">
-  <meta name="CocoaVersion" content="2575.5">
-  <style type="text/css">
-    p.p1 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Times; -webkit-text-stroke: #000000}
-    p.p2 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Times; -webkit-text-stroke: #000000; min-height: 14.0px}
-    p.p3 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica; -webkit-text-stroke: #000000; min-height: 14.0px}
-    span.s1 {font-kerning: none}
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>We b0nd: Drop Your Pin</title>
+  <link
+    rel="stylesheet"
+    href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css"
+  />
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Helvetica Neue', sans-serif;
+      background-color: #F3E7D2;
+      color: #333;
+    }
+    #map {
+      height: 100vh;
+      width: 100%;
+    }
+    #intro {
+      position: absolute;
+      top: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background-color: white;
+      border: 2px solid #ab3130;
+      padding: 20px;
+      border-radius: 12px;
+      z-index: 1000;
+      max-width: 90%;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    }
+    #intro h2 {
+      margin: 0 0 10px;
+      color: #ab3130;
+    }
+    #cityInput {
+      width: 100%;
+      padding: 10px;
+      margin-top: 10px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+    }
+    #submitBtn {
+      background-color: #ab3130;
+      color: white;
+      border: none;
+      padding: 10px 16px;
+      border-radius: 8px;
+      margin-top: 10px;
+      cursor: pointer;
+    }
+    .leaflet-popup-content-wrapper {
+      border-radius: 10px;
+    }
+    .leaflet-popup-content button {
+      background-color: #ab3130;
+      color: white;
+      border: none;
+      padding: 5px 10px;
+      border-radius: 6px;
+      cursor: pointer;
+    }
   </style>
 </head>
 <body>
-<p class="p1"><span class="s1">&lt;!DOCTYPE html&gt;</span></p>
-<p class="p1"><span class="s1">&lt;html lang="en"&gt;</span></p>
-<p class="p1"><span class="s1">&lt;head&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>&lt;meta charset="UTF-8"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>&lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>&lt;title&gt;We b0nd: Drop Your Pin&lt;/title&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>&lt;link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css" /&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>&lt;style&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>body {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>margin: 0;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>font-family: 'Helvetica Neue', sans-serif;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>background-color: #F3E7D2;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>color: #333;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>}</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>#map {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>height: 100vh;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>width: 100%;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>}</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>#intro {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>position: absolute;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>top: 20px;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>left: 50%;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>transform: translateX(-50%);</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>background-color: white;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>border: 2px solid #ab3130;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>padding: 20px;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>border-radius: 12px;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>z-index: 1000;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>max-width: 90%;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>box-shadow: 0 4px 12px rgba(0,0,0,0.15);</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>}</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>#intro h2 {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>margin: 0 0 10px;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>color: #ab3130;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>}</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>#cityInput {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>width: 100%;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>padding: 10px;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>margin-top: 10px;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>border-radius: 8px;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>border: 1px solid #ccc;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>}</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>#submitBtn {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>background-color: #ab3130;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>color: white;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>border: none;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>padding: 10px 16px;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>border-radius: 8px;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>margin-top: 10px;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>cursor: pointer;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>}</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>.leaflet-popup-content-wrapper {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>border-radius: 10px;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>}</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>.leaflet-popup-content button {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>background-color: #ab3130;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>color: white;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>border: none;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>padding: 5px 10px;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>border-radius: 6px;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>cursor: pointer;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>}</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>&lt;/style&gt;</span></p>
-<p class="p1"><span class="s1">&lt;/head&gt;</span></p>
-<p class="p1"><span class="s1">&lt;body&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>&lt;div id="intro"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;h2&gt;Where are you from?&lt;/h2&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;p&gt;Type in the cities you call home, and the places you are from.&lt;/p&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;input id="cityInput" type="text" placeholder="e.g. Copenhagen, Lisbon" /&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;button id="submitBtn"&gt;Drop My Pins&lt;/button&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>&lt;/div&gt;</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>&lt;div id="map"&gt;&lt;/div&gt;</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>&lt;script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"&gt;&lt;/script&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>&lt;script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"&gt;&lt;/script&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>&lt;script&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>const savedPins = JSON.parse(localStorage.getItem('userPins') || '[]');</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>const map = L.map('map').setView([20, 0], 2);</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>attribution: '&amp;copy; OpenStreetMap contributors'</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>}).addTo(map);</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>const geocoder = L.Control.geocoder({ defaultMarkGeocode: false })</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>.on('markgeocode', function(e) {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>dropPin(e.geocode.center, e.geocode.name);</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>map.setView(e.geocode.center, 6);</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>}).addTo(map);</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>savedPins.forEach(({ lat, lng, name }) =&gt; dropPin([lat, lng], name));</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>function dropPin(coords, label) {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>const marker = L.marker(coords).addTo(map).bindPopup(</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>`&lt;b&gt;${label}&lt;/b&gt;&lt;br&gt;&lt;button onclick="removePin(${coords[0]}, ${coords[1]})"&gt;Remove&lt;/button&gt;`</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>);</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>savedPins.push({ lat: coords[0], lng: coords[1], name: label });</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>localStorage.setItem('userPins', JSON.stringify(savedPins));</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>}</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>function removePin(lat, lng) {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>const index = savedPins.findIndex(pin =&gt; pin.lat === lat &amp;&amp; pin.lng === lng);</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>if (index !== -1) {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>savedPins.splice(index, 1);</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>localStorage.setItem('userPins', JSON.stringify(savedPins));</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>location.reload();</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>}</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>}</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>document.getElementById('submitBtn').addEventListener('click', async () =&gt; {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>const input = document.getElementById('cityInput').value;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>const cities = input.split(',').map(c =&gt; c.trim()).filter(c =&gt; c);</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>for (const city of cities) {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>await fetch(`https://nominatim.openstreetmap.org/search?format=json&amp;q=${encodeURIComponent(city)}`)</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">          </span>.then(res =&gt; res.json())</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">          </span>.then(data =&gt; {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>if (data[0]) {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">              </span>dropPin([+data[0].lat, +data[0].lon], city);</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">              </span>map.setView([+data[0].lat, +data[0].lon], 6);</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>}</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">          </span>});</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>}</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>document.getElementById('intro').style.display = 'none';</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>});</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>&lt;/script&gt;</span></p>
-<p class="p1"><span class="s1">&lt;/body&gt;</span></p>
-<p class="p1"><span class="s1">&lt;/html&gt;</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p3"><span class="s1"></span><br></p>
+  <div id="intro">
+    <h2>Type in the cities you call home, and the places you are from.</h2>
+    <input type="text" id="cityInput" placeholder="Start typing..." />
+    <button id="submitBtn">Add City</button>
+  </div>
+  <div id="map"></div>
+
+  <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"></script>
+  <script>
+    const map = L.map('map').setView([20, 0], 2);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      maxZoom: 19,
+    }).addTo(map);
+
+    document.getElementById('submitBtn').addEventListener('click', async () => {
+      const city = document.getElementById('cityInput').value;
+      if (!city) return;
+
+      const res = await fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${city}`);
+      const data = await res.json();
+
+      if (data.length > 0) {
+        const { lat, lon, display_name } = data[0];
+        const marker = L.marker([lat, lon]).addTo(map);
+        marker.bindPopup(`<b>${display_name}</b>`).openPopup();
+        map.setView([lat, lon], 6);
+        document.getElementById('cityInput').value = '';
+      } else {
+        alert('City not found. Please try a different name.');
+      }
+    });
+  </script>
 </body>
 </html>
+
